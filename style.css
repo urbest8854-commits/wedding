@@ -92,12 +92,12 @@ main {
   background:
     linear-gradient(
       to bottom,
-      rgba(247, 244, 239, 0) 25%,
-      rgba(247, 244, 239, 0) 42%,
-      rgba(247, 244, 239, 0.25) 52%,
-      rgba(247, 244, 239, 0.72) 61%,
-      rgba(247, 244, 239, 0.96) 69%,
-      rgba(247, 244, 239, 1) 76%
+      rgba(247, 244, 239, 0) 35%,
+      rgba(247, 244, 239, 0.05) 45%,
+      rgba(247, 244, 239, 0.35) 55%,
+      rgba(247, 244, 239, 0.78) 64%,
+      rgba(247, 244, 239, 0.97) 72%,
+      rgba(247, 244, 239, 1) 80%
     );
 }
 
@@ -109,13 +109,14 @@ main {
 .cover-content {
   position: absolute;
   z-index: 2;
+  top: 61svh;
   left: 0;
-  bottom: 105px;
   width: 100%;
   padding: 0 24px;
   text-align: center;
   color: var(--text);
 }
+
 
 .eyebrow,
 .section-label {
