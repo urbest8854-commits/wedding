@@ -56,8 +56,7 @@ main {
   overflow: hidden;
   background: #f5f2ee;
 }
-
-.cover-image {
+cover-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -74,19 +73,19 @@ main {
   object-position: center center;
   display: block;
 }
-
 .cover-overlay {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(
       to bottom,
-      rgba(255,255,255,0) 45%,
-      rgba(247,244,239,.15) 57%,
-      rgba(130,119,108,.65) 72%,
-      rgba(105,95,85,.9) 100%
+      rgba(255,255,255,0) 35%,
+      rgba(247,244,239,.05) 48%,
+      rgba(247,244,239,.45) 72%,
+      rgba(247,244,239,.92) 100%
     );
 }
+
 
 .cover-content {
   position: absolute;
