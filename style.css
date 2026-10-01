@@ -61,7 +61,25 @@ main {
   overflow: hidden;
   background: var(--bg);
 }
-
+.cover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45svh;
+  height: 24svh;
+  background: linear-gradient(
+    to bottom,
+    rgba(247, 244, 239, 0) 0%,
+    rgba(247, 244, 239, 0.08) 20%,
+    rgba(247, 244, 239, 0.35) 45%,
+    rgba(247, 244, 239, 0.72) 65%,
+    rgba(247, 244, 239, 0.96) 85%,
+    rgba(247, 244, 239, 1) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
 /*
   The original cover photo is a landscape image.
   We show the whole photo at the top instead of cropping it
