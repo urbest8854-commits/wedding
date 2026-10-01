@@ -70,6 +70,7 @@ main {
 
 .cover-image img {
   object-fit: cover;
+  object-position: center center;
 }
 
 .cover-overlay {
