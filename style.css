@@ -73,7 +73,7 @@ main {
   top: 0;
   left: 0;
   width: 100%;
-  height: 58svh;
+  height: 50svh;
   overflow: hidden;
   background: var(--bg);
 }
@@ -92,12 +92,12 @@ main {
   background:
     linear-gradient(
       to bottom,
-      rgba(247, 244, 239, 0) 30%,
-      rgba(247, 244, 239, 0.03) 42%,
-      rgba(247, 244, 239, 0.28) 58%,
-      rgba(247, 244, 239, 0.78) 72%,
-      rgba(247, 244, 239, 0.98) 84%,
-      rgba(247, 244, 239, 1) 100%
+      rgba(247, 244, 239, 0) 25%,
+      rgba(247, 244, 239, 0) 42%,
+      rgba(247, 244, 239, 0.25) 52%,
+      rgba(247, 244, 239, 0.72) 61%,
+      rgba(247, 244, 239, 0.96) 69%,
+      rgba(247, 244, 239, 1) 76%
     );
 }
 
@@ -110,7 +110,7 @@ main {
   position: absolute;
   z-index: 2;
   left: 0;
-  bottom: 92px;
+  bottom: 105px;
   width: 100%;
   padding: 0 24px;
   text-align: center;
