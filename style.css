@@ -321,19 +321,17 @@ main {
 /* =========================
    LOCATION
    ========================= */
-
 .map-placeholder {
-  margin-top: 36px;
-  min-height: 230px;
-  display: grid;
-  place-content: center;
-  background: #e8e2d9;
-  color: #817a70;
+  width: 100%;
+  margin: 24px 0;
+  overflow: hidden;
+  border-radius: 2px;
 }
 
-.map-placeholder p {
-  margin: 0;
-  font-size: 17px;
+.map-placeholder img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .map-placeholder small {
