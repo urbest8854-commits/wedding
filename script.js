@@ -12,7 +12,21 @@ if (accountToggle && accountDetail) {
 }
 
 // 계좌번호 복사
-const copyButton = document.querySelector(".copy-button");
+const copyButton = document.querySelectorAll(".copy-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    const text = button.previousElementSibling.textContent;
+    const accountNumber = text.match(/\d[\d-]+/)?.[0];
+
+    if (accountNumber) {
+      navigator.clipboard.writeText(accountNumber);
+      button.textContent = "복사되었습니다 ✓";
+
+      setTimeout(() => {
+        button.textContent = "계좌번호 복사";
+      }, 1500);
+    }
+  });
+});
 
 if (copyButton) {
   copyButton.addEventListener("click", async () => {
