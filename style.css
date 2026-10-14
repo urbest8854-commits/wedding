@@ -458,10 +458,13 @@ main {
   letter-spacing: .08em;
 }
 /* Wedding Calendar */
-.wedding-calendar {
-  max-width: 420px;
-  margin: 56px auto 0;
-  padding: 0 12px;
+.wedding-info {
+  background-color: var(--bg);
+}
+
+.wedding-calendar,
+.wedding-countdown {
+  background-color: transparent;
 }
 
 .calendar-month {
@@ -524,11 +527,6 @@ main {
 }
 
 /* D-Day */
-.wedding-countdown {
-  margin: 56px -12px 0;
-  padding: 36px 0 12px;
-  text-align: center;
-}
 
 .countdown-title {
   margin: 0 0 32px;
