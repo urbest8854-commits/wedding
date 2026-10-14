@@ -292,27 +292,88 @@ main {
   color: var(--muted);
 }
 
+
 /* =========================
    GALLERY
    ========================= */
 
 .gallery {
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 80px 0 70px;
+  text-align: center;
+}
+
+.gallery .section-label {
+  margin-bottom: 12px;
+}
+
+.gallery h2 {
+  margin: 0 0 42px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 6vw, 32px);
+  font-weight: 400;
 }
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  margin-top: 36px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 0;
 }
 
 .gallery-grid img {
-  aspect-ratio: 1 / 1.2;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1.15;
   object-fit: cover;
   cursor: pointer;
 }
+
+/* 처음에는 9장만 표시 */
+.gallery-grid img:nth-child(n + 10) {
+  display: none;
+}
+
+/* 더보기를 누르면 나머지 사진 표시 */
+.gallery-grid.expanded img:nth-child(n + 10) {
+  display: block;
+}
+
+/* 더보기 버튼 */
+.gallery-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 36px;
+  padding: 8px 20px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.gallery-more span {
+  font-size: 23px;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+
+.gallery-more[aria-expanded="true"] span {
+  transform: rotate(180deg);
+}
+
+/* 작은 모바일 화면 */
+@media (max-width: 360px) {
+  .gallery {
+    padding-top: 64px;
+  }
+
+  .gallery-grid {
+    gap: 3px;
+  }
+}
+
 
 /* =========================
    LOCATION
