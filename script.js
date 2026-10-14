@@ -162,30 +162,138 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-
 // ========================================
-// Gallery: Show More / Show Less
+// Gallery: Smooth Show More / Show Less
 // ========================================
 
-document.addEventListener("DOMContentLoaded", () => {
-  const galleryGrid = document.querySelector(".gallery-grid");
-  const galleryMoreButton = document.querySelector("#gallery-more");
+const galleryGrid = document.querySelector(".gallery-grid");
+const galleryMoreButton = document.querySelector("#gallery-more");
 
-  if (!galleryGrid || !galleryMoreButton) {
-    return;
+if (galleryGrid && galleryMoreButton) {
+  const images = Array.from(galleryGrid.querySelectorAll("img"));
+  const initialCount = 9;
+  const duration = 550;
+
+  let isExpanded = false;
+  let isAnimating = false;
+
+  // 처음 표시할 사진과 나머지 사진 구분
+  images.forEach((image, index) => {
+    if (index >= initialCount) {
+      image.style.display = "none";
+    }
+  });
+
+  function animateHeight(startHeight, endHeight, onFinish) {
+    galleryGrid.style.height = `${startHeight}px`;
+    galleryGrid.offsetHeight;
+
+    galleryGrid.style.transition = `height ${duration}ms ease`;
+    galleryGrid.style.height = `${endHeight}px`;
+
+    let finished = false;
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+
+      galleryGrid.removeEventListener("transitionend", onTransitionEnd);
+      galleryGrid.style.transition = "";
+
+      onFinish();
+    }
+
+    function onTransitionEnd(event) {
+      if (event.target === galleryGrid && event.propertyName === "height") {
+        finish();
+      }
+    }
+
+    galleryGrid.addEventListener("transitionend", onTransitionEnd);
+
+    // transitionend가 발생하지 않는 상황에 대한 안전장치
+    setTimeout(finish, duration + 100);
   }
 
   galleryMoreButton.addEventListener("click", () => {
-    const isExpanded = galleryGrid.classList.toggle("expanded");
+    if (isAnimating) return;
 
-    galleryMoreButton.setAttribute(
-      "aria-expanded",
-      String(isExpanded)
-    );
+    isAnimating = true;
 
-    const label = isExpanded ? "접기" : "더보기";
+    const startHeight = galleryGrid.getBoundingClientRect().height;
 
-    galleryMoreButton.innerHTML = `${label} <span>${isExpanded ? "⌃" : "⌄"}</span>`;
+    if (!isExpanded) {
+      // 나머지 사진을 표시하되, 높이는 현재 상태로 고정
+      images.forEach((image, index) => {
+        if (index >= initialCount) {
+          image.style.display = "block";
+        }
+      });
+
+      const endHeight = galleryGrid.scrollHeight;
+
+      animateHeight(startHeight, endHeight, () => {
+        galleryGrid.style.height = "auto";
+
+        // 사진이 부드럽게 나타나도록 처리
+        images.forEach((image, index) => {
+          if (index >= initialCount) {
+            image.style.opacity = "1";
+          }
+        });
+
+        isExpanded = true;
+        isAnimating = false;
+      });
+
+      images.forEach((image, index) => {
+        if (index >= initialCount) {
+          image.style.opacity = "0";
+        }
+      });
+
+      galleryMoreButton.setAttribute("aria-expanded", "true");
+      galleryMoreButton.innerHTML = '접기 <span>⌃</span>';
+    } else {
+      // 접기 전 전체 높이 측정
+      galleryGrid.style.height =
+        `${galleryGrid.getBoundingClientRect().height}px`;
+
+      galleryGrid.offsetHeight;
+
+      // 나머지 사진을 숨겼을 때의 높이 계산
+      images.forEach((image, index) => {
+        if (index >= initialCount) {
+          image.style.display = "none";
+        }
+      });
+
+      const endHeight = galleryGrid.scrollHeight;
+
+      // 다시 펼칠 때를 위해 사진 표시 상태 복구 후 애니메이션
+      images.forEach((image, index) => {
+        if (index >= initialCount) {
+          image.style.display = "block";
+        }
+      });
+
+      animateHeight(startHeight, endHeight, () => {
+        images.forEach((image, index) => {
+          if (index >= initialCount) {
+            image.style.display = "none";
+            image.style.opacity = "";
+          }
+        });
+
+        galleryGrid.style.height = "auto";
+
+        isExpanded = false;
+        isAnimating = false;
+      });
+
+      galleryMoreButton.setAttribute("aria-expanded", "false");
+      galleryMoreButton.innerHTML = '더보기 <span>⌄</span>';
+    }
   });
-});
+}
 
