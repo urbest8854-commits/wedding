@@ -480,7 +480,7 @@ main {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 10px 0;
+  gap: 22px 0;
   text-align: center;
 }
 
