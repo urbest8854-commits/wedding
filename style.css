@@ -464,8 +464,16 @@ main {
   background: var(--paper);
 }
 
-.wedding-calendar,
+.wedding-calendar {
+  max-width: 420px;
+  margin: 32px auto 0;
+  padding: 0 12px;
+}
+
 .wedding-countdown {
+  margin: 24px -12px 0;
+  padding: 20px 0 12px;
+  text-align: center;
   background-color: transparent;
 }
 
