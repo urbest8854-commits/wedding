@@ -162,27 +162,30 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
+
 // ========================================
 // Gallery: Show More / Show Less
 // ========================================
 
-const galleryGrid = document.querySelector(".gallery-grid");
-const galleryMoreButton = document.querySelector("#gallery-more");
+document.addEventListener("DOMContentLoaded", () => {
+  const galleryGrid = document.querySelector(".gallery-grid");
+  const galleryMoreButton = document.querySelector("#gallery-more");
 
-if (galleryGrid && galleryMoreButton) {
+  if (!galleryGrid || !galleryMoreButton) {
+    return;
+  }
+
   galleryMoreButton.addEventListener("click", () => {
-    const expanded =
-      galleryMoreButton.getAttribute("aria-expanded") === "true";
-
-    galleryGrid.classList.toggle("expanded", !expanded);
+    const isExpanded = galleryGrid.classList.toggle("expanded");
 
     galleryMoreButton.setAttribute(
       "aria-expanded",
-      String(!expanded)
+      String(isExpanded)
     );
 
-    galleryMoreButton.innerHTML = expanded
-      ? '더보기 <span>⌄</span>'
-      : '접기 <span>⌄</span>';
+    const label = isExpanded ? "접기" : "더보기";
+
+    galleryMoreButton.innerHTML = `${label} <span>${isExpanded ? "⌃" : "⌄"}</span>`;
   });
-}
+});
+
