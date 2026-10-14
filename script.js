@@ -50,3 +50,114 @@ document.querySelectorAll(".gallery-grid img").forEach((image) => {
     window.open(image.src, "_blank");
   });
 });
+
+// ========================================
+// Wedding Calendar
+// ========================================
+
+const calendar = document.querySelector("#wedding-calendar");
+
+if (calendar) {
+  const year = 2026;
+  const month = 10; // JavaScript에서 10은 11월
+  const weddingDay = 14;
+
+  const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+
+  // 요일 표시
+  weekdays.forEach((day, index) => {
+    const cell = document.createElement("div");
+
+    cell.className = "calendar-cell weekday";
+
+    if (index === 0) cell.classList.add("sunday");
+    if (index === 6) cell.classList.add("saturday");
+
+    cell.textContent = day;
+    calendar.appendChild(cell);
+  });
+
+  // 11월 1일의 요일
+  const firstDay = new Date(year, month, 1).getDay();
+
+  // 11월의 마지막 날짜
+  const lastDate = new Date(year, month + 1, 0).getDate();
+
+  // 첫 주의 빈칸
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement("div");
+    empty.className = "calendar-cell";
+    calendar.appendChild(empty);
+  }
+
+  // 날짜 생성
+  for (let day = 1; day <= lastDate; day++) {
+    const cell = document.createElement("div");
+    const number = document.createElement("span");
+
+    cell.className = "calendar-cell";
+
+    const weekday = new Date(year, month, day).getDay();
+
+    if (weekday === 0) cell.classList.add("sunday");
+    if (weekday === 6) cell.classList.add("saturday");
+
+    if (day === weddingDay) {
+      cell.classList.add("wedding-date");
+    }
+
+    number.textContent = day;
+    cell.appendChild(number);
+
+    calendar.appendChild(cell);
+  }
+}
+
+
+// ========================================
+// Wedding Countdown
+// ========================================
+
+const weddingDate = new Date("2026-11-14T13:30:00+09:00");
+
+function updateCountdown() {
+  const now = Date.now();
+  const difference = weddingDate.getTime() - now;
+
+  const daysElement = document.querySelector("#countdown-days");
+  const hoursElement = document.querySelector("#countdown-hours");
+  const minutesElement = document.querySelector("#countdown-minutes");
+  const secondsElement = document.querySelector("#countdown-seconds");
+
+  if (
+    !daysElement ||
+    !hoursElement ||
+    !minutesElement ||
+    !secondsElement
+  ) {
+    return;
+  }
+
+  if (difference <= 0) {
+    daysElement.textContent = "♥";
+    hoursElement.textContent = "♥";
+    minutesElement.textContent = "♥";
+    secondsElement.textContent = "♥";
+    return;
+  }
+
+  const totalSeconds = Math.floor(difference / 1000);
+
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  daysElement.textContent = days;
+  hoursElement.textContent = String(hours).padStart(2, "0");
+  minutesElement.textContent = String(minutes).padStart(2, "0");
+  secondsElement.textContent = String(seconds).padStart(2, "0");
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
