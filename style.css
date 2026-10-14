@@ -325,8 +325,10 @@ main {
   width: 100%;
   aspect-ratio: 1 / 1.15;
   object-fit: cover;
+  object-position: center;
   cursor: pointer;
 }
+
 /* 처음에는 9장만 표시 */
 .gallery-grid img:nth-child(n + 10) {
   display: none;
