@@ -329,14 +329,80 @@ main {
   cursor: pointer;
 }
 
-/* 처음에는 9장만 표시 */
-.gallery-grid img:nth-child(n + 10) {
-  display: none;
+/* 갤러리 사진 펼치기 애니메이션 */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 0;
 }
 
-/* 펼치면 15장 모두 표시 */
-.gallery-grid.expanded img:nth-child(n + 10) {
+.gallery-grid img {
   display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1.15;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.gallery-expand {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.6s ease;
+}
+
+.gallery-expand:not(.expanded) {
+  grid-template-rows: 1fr;
+}
+
+.gallery-expand > .gallery-grid {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* 처음에는 9장까지만 보이도록 처리 */
+.gallery-grid img:nth-child(n + 10) {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.35s ease,
+    visibility 0s linear 0.35s;
+}
+
+/* 펼쳐질 때 사진 표시 */
+.gallery-expand.expanded .gallery-grid img:nth-child(n + 10) {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.45s ease,
+    visibility 0s;
+}
+
+/* 버튼 */
+.gallery-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 36px;
+  padding: 8px 20px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.gallery-more span {
+  display: inline-block;
+  font-size: 23px;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.gallery-more[aria-expanded="true"] span {
+  transform: rotate(180deg);
 }
 
 /* 더보기 버튼 */
