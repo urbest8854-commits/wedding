@@ -266,10 +266,6 @@ main {
    WEDDING INFO
    ========================= */
 
-.wedding-info {
-  background: var(--bg);
-}
-
 .wedding-info h2 span {
   font-size: .55em;
   letter-spacing: .08em;
