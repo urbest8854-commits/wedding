@@ -327,13 +327,12 @@ main {
   object-fit: cover;
   cursor: pointer;
 }
-
 /* 처음에는 9장만 표시 */
 .gallery-grid img:nth-child(n + 10) {
   display: none;
 }
 
-/* 더보기를 누르면 나머지 사진 표시 */
+/* 펼치면 15장 모두 표시 */
 .gallery-grid.expanded img:nth-child(n + 10) {
   display: block;
 }
@@ -671,3 +670,4 @@ main {
     box-shadow: 0 12px 50px rgba(60, 50, 40, .08);
   }
 }
+
