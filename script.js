@@ -161,3 +161,28 @@ function updateCountdown() {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
+
+// ========================================
+// Gallery: Show More / Show Less
+// ========================================
+
+const galleryGrid = document.querySelector(".gallery-grid");
+const galleryMoreButton = document.querySelector("#gallery-more");
+
+if (galleryGrid && galleryMoreButton) {
+  galleryMoreButton.addEventListener("click", () => {
+    const expanded =
+      galleryMoreButton.getAttribute("aria-expanded") === "true";
+
+    galleryGrid.classList.toggle("expanded", !expanded);
+
+    galleryMoreButton.setAttribute(
+      "aria-expanded",
+      String(!expanded)
+    );
+
+    galleryMoreButton.innerHTML = expanded
+      ? '더보기 <span>⌄</span>'
+      : '접기 <span>⌄</span>';
+  });
+}
