@@ -162,6 +162,7 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
+
 // ========================================
 // Gallery: Smooth Show More / Show Less
 // ========================================
@@ -177,112 +178,120 @@ if (galleryGrid && galleryMoreButton) {
   let isExpanded = false;
   let isAnimating = false;
 
-  // 처음 표시할 사진과 나머지 사진 구분
+  // 초기 상태: 9장만 표시
   images.forEach((image, index) => {
-    if (index >= initialCount) {
-      image.style.display = "none";
-    }
+    image.style.display = index < initialCount ? "block" : "none";
   });
 
+  // 그리드 높이 측정
+  function getHeight() {
+    return galleryGrid.getBoundingClientRect().height;
+  }
+
+  // 높이 애니메이션
   function animateHeight(startHeight, endHeight, onFinish) {
+    let finished = false;
+
+    galleryGrid.style.transition = "none";
     galleryGrid.style.height = `${startHeight}px`;
+
+    // 시작 높이를 브라우저에 반영
     galleryGrid.offsetHeight;
 
     galleryGrid.style.transition = `height ${duration}ms ease`;
     galleryGrid.style.height = `${endHeight}px`;
 
-    let finished = false;
-
     function finish() {
       if (finished) return;
       finished = true;
 
+      clearTimeout(fallbackTimer);
       galleryGrid.removeEventListener("transitionend", onTransitionEnd);
-      galleryGrid.style.transition = "";
 
+      galleryGrid.style.transition = "none";
       onFinish();
+
+      // 다음 애니메이션을 위해 transition 초기화
+      requestAnimationFrame(() => {
+        galleryGrid.style.transition = "";
+      });
     }
 
     function onTransitionEnd(event) {
-      if (event.target === galleryGrid && event.propertyName === "height") {
+      if (
+        event.target === galleryGrid &&
+        event.propertyName === "height"
+      ) {
         finish();
       }
     }
 
     galleryGrid.addEventListener("transitionend", onTransitionEnd);
 
-    // transitionend가 발생하지 않는 상황에 대한 안전장치
-    setTimeout(finish, duration + 100);
+    const fallbackTimer = setTimeout(finish, duration + 100);
   }
 
+  // 더보기 / 접기 버튼
   galleryMoreButton.addEventListener("click", () => {
     if (isAnimating) return;
 
     isAnimating = true;
 
-    const startHeight = galleryGrid.getBoundingClientRect().height;
+    const startHeight = getHeight();
 
     if (!isExpanded) {
-      // 나머지 사진을 표시하되, 높이는 현재 상태로 고정
+      // =========================
+      // 더보기
+      // =========================
+
+      // 나머지 사진 표시
       images.forEach((image, index) => {
         if (index >= initialCount) {
           image.style.display = "block";
         }
       });
 
-      const endHeight = galleryGrid.scrollHeight;
+      // 펼쳐진 상태의 높이 측정
+      galleryGrid.style.height = "auto";
+      const endHeight = getHeight();
 
+      // 기존 높이에서 전체 높이까지 부드럽게 펼치기
       animateHeight(startHeight, endHeight, () => {
         galleryGrid.style.height = "auto";
-
-        // 사진이 부드럽게 나타나도록 처리
-        images.forEach((image, index) => {
-          if (index >= initialCount) {
-            image.style.opacity = "1";
-          }
-        });
-
         isExpanded = true;
         isAnimating = false;
       });
 
-      images.forEach((image, index) => {
-        if (index >= initialCount) {
-          image.style.opacity = "0";
-        }
-      });
-
       galleryMoreButton.setAttribute("aria-expanded", "true");
       galleryMoreButton.innerHTML = '접기 <span>⌃</span>';
+
     } else {
-      // 접기 전 전체 높이 측정
-      galleryGrid.style.height =
-        `${galleryGrid.getBoundingClientRect().height}px`;
+      // =========================
+      // 접기
+      // =========================
 
-      galleryGrid.offsetHeight;
+      // 추가 사진을 숨기지 않고
+      // 처음 9장만 표시했을 때의 높이를 계산
+      const extraImages = images.slice(initialCount);
 
-      // 나머지 사진을 숨겼을 때의 높이 계산
-      images.forEach((image, index) => {
-        if (index >= initialCount) {
-          image.style.display = "none";
-        }
+      extraImages.forEach(image => {
+        image.style.visibility = "hidden";
+        image.style.position = "absolute";
       });
 
-      const endHeight = galleryGrid.scrollHeight;
+      const endHeight = getHeight();
 
-      // 다시 펼칠 때를 위해 사진 표시 상태 복구 후 애니메이션
-      images.forEach((image, index) => {
-        if (index >= initialCount) {
-          image.style.display = "block";
-        }
+      // 추가 사진의 원래 스타일 복원
+      extraImages.forEach(image => {
+        image.style.visibility = "";
+        image.style.position = "";
       });
 
+      // 전체 높이에서 접힌 높이까지 부드럽게 줄이기
       animateHeight(startHeight, endHeight, () => {
-        images.forEach((image, index) => {
-          if (index >= initialCount) {
-            image.style.display = "none";
-            image.style.opacity = "";
-          }
+        // 애니메이션이 끝난 뒤에 추가 사진 숨김
+        extraImages.forEach(image => {
+          image.style.display = "none";
         });
 
         galleryGrid.style.height = "auto";
@@ -296,4 +305,3 @@ if (galleryGrid && galleryMoreButton) {
     }
   });
 }
-
