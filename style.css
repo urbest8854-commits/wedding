@@ -407,6 +407,24 @@ main {
   margin-top: 12px;
 }
 
+/* 오시는 길 버튼 */
+.location-buttons .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 64px;
+  padding: 10px 4px;
+
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  word-break: keep-all;
+}
+
 /* =========================
    BUTTONS / CONTACT
    ========================= */
