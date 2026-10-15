@@ -1,48 +1,71 @@
-// 계좌번호 펼치기
-const accountToggle = document.querySelector(".account-toggle");
-const accountDetail = document.querySelector(".account-detail");
+// ========================================
+// Account: 펼치기 / 접기
+// ========================================
 
-if (accountToggle && accountDetail) {
-  accountToggle.addEventListener("click", () => {
-    const isHidden = accountDetail.hidden;
-    accountDetail.hidden = !isHidden;
-    accountToggle.setAttribute("aria-expanded", String(isHidden));
-    accountToggle.textContent = isHidden ? "계좌번호 닫기" : "계좌번호 보기";
-  });
-}
-
-// 계좌번호 복사
-const copyButton = document.querySelectorAll(".copy-button").forEach((button) => {
+document.querySelectorAll(".account-group-toggle").forEach((button) => {
   button.addEventListener("click", () => {
-    const text = button.previousElementSibling.textContent;
-    const accountNumber = text.match(/\d[\d-]+/)?.[0];
+    const isExpanded = button.getAttribute("aria-expanded") === "true";
+    const targetId = button.getAttribute("aria-controls");
+    const accountList = document.getElementById(targetId);
 
-    if (accountNumber) {
-      navigator.clipboard.writeText(accountNumber);
-      button.textContent = "복사되었습니다 ✓";
+    if (!accountList) return;
 
-      setTimeout(() => {
-        button.textContent = "계좌번호 복사";
-      }, 1500);
-    }
+    button.setAttribute("aria-expanded", String(!isExpanded));
+    accountList.hidden = isExpanded;
   });
 });
 
-if (copyButton) {
-  copyButton.addEventListener("click", async () => {
-    const accountText = "은행명 000-0000-0000";
+
+// ========================================
+// Account: 계좌번호 복사
+// ========================================
+
+document.querySelectorAll(".account-copy").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const accountItem = button.closest(".account-item");
+    const numberElement = accountItem?.querySelector(".account-number");
+
+    if (!numberElement) return;
+
+    // 은행명은 제외하고 계좌번호만 복사
+    const accountText = numberElement.textContent.trim();
+    const accountNumber = accountText.replace(/^[^\d]+/, "").trim();
+
+    if (!accountNumber) return;
 
     try {
-      await navigator.clipboard.writeText(accountText);
-      copyButton.textContent = "복사되었습니다";
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(accountNumber);
+      } else {
+        const textarea = document.createElement("textarea");
+
+        textarea.value = accountNumber;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        const success = document.execCommand("copy");
+        textarea.remove();
+
+        if (!success) {
+          throw new Error("복사 실패");
+        }
+      }
+
+      const originalText = button.textContent;
+      button.textContent = "완료 ✓";
+
       setTimeout(() => {
-        copyButton.textContent = "계좌번호 복사";
+        button.textContent = originalText;
       }, 1500);
-    } catch {
-      alert("계좌번호를 직접 복사해 주세요.");
+
+    } catch (error) {
+      window.prompt("계좌번호를 직접 복사해 주세요.", accountNumber);
     }
   });
-}
+});
 
 // 갤러리 이미지를 누르면 새 창에서 크게 보기
 document.querySelectorAll(".gallery-grid img").forEach((image) => {
