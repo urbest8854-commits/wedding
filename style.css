@@ -400,13 +400,6 @@ main {
   font-size: 11px;
 }
 
-.location-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 12px;
-}
-
 /* 오시는 길 버튼 */
 .location-buttons .button {
   display: flex;
