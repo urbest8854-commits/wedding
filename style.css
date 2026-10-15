@@ -399,23 +399,31 @@ main {
 .map-placeholder small {
   font-size: 11px;
 }
+/* 오시는 길 버튼 3개 한 줄 배치 */
+.location .location-buttons {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  width: 100%;
+}
 
-/* 오시는 길 버튼 */
-.location-buttons .button {
-  display: flex;
+.location .location-buttons .button {
+  display: flex !important;
   align-items: center;
   justify-content: center;
 
-  width: 100%;
-  min-width: 0;
+  width: 100% !important;
+  min-width: 0 !important;
   min-height: 64px;
-  padding: 10px 4px;
+  margin: 0 !important;
+  padding: 8px 3px !important;
 
   box-sizing: border-box;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 13px !important;
+  line-height: 1.4;
   text-align: center;
   word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 /* =========================
