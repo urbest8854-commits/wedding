@@ -458,34 +458,169 @@ main {
   color: var(--accent);
   font-size: 12px;
 }
+/* ========================================
+   Account Section
+======================================== */
 
-/* =========================
-   ACCOUNT
-   ========================= */
+.account-section {
+  background: var(--paper);
+}
 
-.account {
-  padding-top: 60px;
-  padding-bottom: 90px;
+.account-section h2 {
+  margin-bottom: 18px;
+}
+
+.account-description {
+  margin: 0 0 36px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+/* 신랑 측 / 신부 측 카드 */
+.account-group {
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  text-align: left;
+}
+
+/* 그룹 제목 */
+.account-group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 64px;
+  padding: 18px 22px;
+
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 500;
+  text-align: left;
+
+  cursor: pointer;
+}
+
+/* 신랑 / 신부 포인트 컬러 */
+.groom-group .account-group-toggle {
+  color: #718b96;
+}
+
+.bride-group .account-group-toggle {
+  color: #b77d7d;
+}
+
+/* 펼침 화살표 */
+.account-arrow {
+  color: var(--muted);
+  font-size: 21px;
+  transition: transform 0.25s ease;
+}
+
+.account-group-toggle[aria-expanded="true"] .account-arrow {
+  transform: rotate(180deg);
+}
+
+/* 계좌 목록 */
+.account-list {
+  border-top: 1px solid var(--line);
+}
+
+.account-list[hidden] {
+  display: none;
+}
+
+/* 계좌 항목 */
+.account-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  row-gap: 12px;
+
+  padding: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.account-item:last-child {
+  border-bottom: 0;
+}
+
+/* 가족 관계 */
+.account-person {
+  grid-column: 1 / -1;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.account-details {
+  min-width: 0;
+  align-self: center;
+}
+
+.account-number {
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.5;
+  letter-spacing: 0.1px;
+}
+
+.account-holder {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* 복사 버튼 */
+.account-copy {
+  align-self: center;
+  justify-self: end;
+
+  min-width: 76px;
+  min-height: 42px;
+  padding: 8px 14px;
+
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--paper);
+  color: var(--accent);
+
+  font-family: inherit;
+  font-size: 14px;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.account-copy:active {
   background: var(--bg);
 }
 
-.account-toggle {
-  width: 100%;
-  max-width: 320px;
-  margin-top: 12px;
-}
+/* 작은 화면 */
+@media (max-width: 380px) {
+  .account-item {
+    padding: 18px 14px;
+    column-gap: 8px;
+  }
 
-.account-detail {
-  max-width: 320px;
-  margin: 12px auto 0;
-  padding: 20px;
-  background: var(--paper);
-  font-size: 13px;
-}
+  .account-number {
+    font-size: 15px;
+  }
 
-.copy-button {
-  width: 100%;
-  margin-top: 8px;
+  .account-copy {
+    min-width: 64px;
+    padding: 8px 10px;
+  }
 }
 
 /* =========================
