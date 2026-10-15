@@ -305,3 +305,55 @@ if (galleryGrid && galleryMoreButton) {
     }
   });
 }
+
+// ========================================
+// 주소 복사
+// ========================================
+
+const copyAddressButton = document.querySelector("#copy-address");
+
+if (copyAddressButton) {
+  copyAddressButton.addEventListener("click", async () => {
+    const address = "서울특별시 광진구 워커힐로 177";
+
+    try {
+      // 기본 클립보드 복사
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(address);
+      } else {
+        // 클립보드 API를 지원하지 않는 환경을 위한 대체 방법
+        const textarea = document.createElement("textarea");
+
+        textarea.value = address;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "0";
+        textarea.setAttribute("readonly", "");
+
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, textarea.value.length);
+
+        const success = document.execCommand("copy");
+        textarea.remove();
+
+        if (!success) {
+          throw new Error("주소 복사에 실패했습니다.");
+        }
+      }
+
+      // 복사 완료 표시
+      copyAddressButton.textContent = "복사 완료 ✓";
+
+      setTimeout(() => {
+        copyAddressButton.textContent = "주소 복사";
+      }, 2000);
+
+    } catch (error) {
+      console.error("주소 복사 실패:", error);
+
+      // 복사에 실패하면 주소를 직접 확인할 수 있도록 표시
+      window.prompt("아래 주소를 직접 복사해 주세요.", address);
+    }
+  });
+}
