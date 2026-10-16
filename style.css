@@ -925,3 +925,53 @@ main {
   }
 }
 
+/* 첫 화면 꽃잎 효과 */
+#petal-container {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+#petal-container.petals-active {
+  opacity: 1;
+}
+
+.floating-petal {
+  position: absolute;
+  top: -40px;
+  display: block;
+
+  font-size: 15px;
+  opacity: 0;
+
+  animation: petal-fall 14s linear infinite;
+  will-change: transform;
+}
+
+#petal-container.petals-active .floating-petal {
+  opacity: 0.65;
+}
+
+@keyframes petal-fall {
+  0% {
+    transform: translate3d(0, -5vh, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(var(--drift), 50vh, 0) rotate(180deg);
+  }
+
+  100% {
+    transform: translate3d(0, 110vh, 0) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #petal-container {
+    display: none;
+  }
+}
