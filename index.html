@@ -90,50 +90,7 @@
   playMusic();
 </script>
 
-  <!-- 첫 화면 꽃잎 효과 -->
-<div id="petal-container" aria-hidden="true"></div>
 
-<script>
-(() => {
-  const container = document.getElementById("petal-container");
-
-  if (!container) return;
-
-  const cover = document.querySelector(".cover");
-  if (!cover) return;
-
-  const reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-  if (reducedMotion) return;
-
-  const petalCount = 12;
-
-  for (let i = 0; i < petalCount; i++) {
-    const petal = document.createElement("span");
-
-    petal.className = "floating-petal";
-    petal.textContent = Math.random() > 0.5 ? "🌸" : "🌷";
-
-    petal.style.left = Math.random() * 100 + "%";
-    petal.style.animationDuration = (9 + Math.random() * 8) + "s";
-    petal.style.animationDelay = (Math.random() * 10) + "s";
-    petal.style.setProperty(
-      "--drift",
-      (Math.random() * 100 - 50) + "px"
-    );
-
-    container.appendChild(petal);
-  }
-
-  const observer = new IntersectionObserver(([entry]) => {
-    container.classList.toggle("petals-active", entry.isIntersecting);
-  });
-
-  observer.observe(cover);
-})();
-</script>
 <body>
   <main>
 
@@ -404,6 +361,51 @@
   </main>
 
   <script src="script.js"></script>
+
+    <!-- 첫 화면 꽃잎 효과 -->
+<div id="petal-container" aria-hidden="true"></div>
+
+<script>
+(() => {
+  const container = document.getElementById("petal-container");
+
+  if (!container) return;
+
+  const cover = document.querySelector(".cover");
+  if (!cover) return;
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (reducedMotion) return;
+
+  const petalCount = 12;
+
+  for (let i = 0; i < petalCount; i++) {
+    const petal = document.createElement("span");
+
+    petal.className = "floating-petal";
+    petal.textContent = Math.random() > 0.5 ? "🌸" : "🌷";
+
+    petal.style.left = Math.random() * 100 + "%";
+    petal.style.animationDuration = (9 + Math.random() * 8) + "s";
+    petal.style.animationDelay = (Math.random() * 10) + "s";
+    petal.style.setProperty(
+      "--drift",
+      (Math.random() * 100 - 50) + "px"
+    );
+
+    container.appendChild(petal);
+  }
+
+  const observer = new IntersectionObserver(([entry]) => {
+    container.classList.toggle("petals-active", entry.isIntersecting);
+  });
+
+  observer.observe(cover);
+})();
+</script>
 </body>
   
 </html>
