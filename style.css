@@ -945,15 +945,15 @@ main {
   top: -40px;
   display: block;
 
-  font-size: 15px;
+  font-size: 12px;
   opacity: 0;
 
-  animation: petal-fall 14s linear infinite;
+  animation: petal-fall 16s linear infinite;
   will-change: transform;
 }
 
 #petal-container.petals-active .floating-petal {
-  opacity: 0.65;
+  opacity: 0.5;
 }
 
 @keyframes petal-fall {
