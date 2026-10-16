@@ -19,6 +19,40 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
+<audio id="wedding-music" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button id="music-toggle" class="music-toggle" type="button">
+  ♫ 음악 켜기
+</button>
+
+<script>
+  const music = document.getElementById("wedding-music");
+  const toggle = document.getElementById("music-toggle");
+
+  async function playMusic() {
+    try {
+      await music.play();
+      toggle.textContent = "♫ 음악 끄기";
+    } catch (error) {
+      toggle.textContent = "♫ 음악 켜기";
+    }
+  }
+
+  toggle.addEventListener("click", async () => {
+    if (music.paused) {
+      await playMusic();
+    } else {
+      music.pause();
+      toggle.textContent = "♫ 음악 켜기";
+    }
+  });
+
+  // 페이지에 진입하면 자동 재생을 시도
+  playMusic();
+</script>
+  
 <body>
   <main>
 
@@ -290,36 +324,5 @@
 
   <script src="script.js"></script>
 </body>
-
-<audio id="wedding-music" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
-<button id="music-toggle" type="button" aria-label="음악 재생">
-  ♫ 음악 재생
-</button>
-
-<script>
-  const music = document.getElementById("wedding-music");
-  const toggle = document.getElementById("music-toggle");
-
-  toggle.addEventListener("click", async () => {
-    if (music.paused) {
-      try {
-        await music.play();
-        toggle.textContent = "♫ 음악 끄기";
-      } catch (error) {
-        toggle.textContent = "음악을 재생할 수 없어요";
-      }
-    } else {
-      music.pause();
-      toggle.textContent = "♫ 음악 재생";
-    }
-  });
-
-  music.addEventListener("ended", () => {
-    toggle.textContent = "♫ 음악 재생";
-  });
-</script>
   
 </html>
