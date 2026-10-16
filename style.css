@@ -49,7 +49,19 @@ main {
   background: var(--paper);
   overflow: hidden;
 }
+/* 스크롤 등장 효과 */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
 
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 /* =========================
    COVER
    ========================= */
