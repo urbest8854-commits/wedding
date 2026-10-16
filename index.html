@@ -290,4 +290,36 @@
 
   <script src="script.js"></script>
 </body>
+
+<audio id="wedding-music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button id="music-toggle" type="button" aria-label="음악 재생">
+  ♫ 음악 재생
+</button>
+
+<script>
+  const music = document.getElementById("wedding-music");
+  const toggle = document.getElementById("music-toggle");
+
+  toggle.addEventListener("click", async () => {
+    if (music.paused) {
+      try {
+        await music.play();
+        toggle.textContent = "♫ 음악 끄기";
+      } catch (error) {
+        toggle.textContent = "음악을 재생할 수 없어요";
+      }
+    } else {
+      music.pause();
+      toggle.textContent = "♫ 음악 재생";
+    }
+  });
+
+  music.addEventListener("ended", () => {
+    toggle.textContent = "♫ 음악 재생";
+  });
+</script>
+  
 </html>
