@@ -967,30 +967,48 @@ main {
   opacity: 0.45;
 }
 
-/* 천천히 떨어지면서 바람에 흔들리는 움직임 */
 @keyframes petal-fall {
   0% {
     transform: translate3d(0, -5vh, 0) rotate(0deg);
   }
 
-  25% {
-    transform: translate3d(var(--drift), 20vh, 0) rotate(100deg);
+  20% {
+    transform: translate3d(
+      calc(var(--drift) * 0.5),
+      17vh,
+      0
+    ) rotate(80deg);
   }
 
-  50% {
-    transform: translate3d(calc(var(--drift) * -0.5), 50vh, 0)
-      rotate(220deg);
+  40% {
+    transform: translate3d(
+      calc(var(--drift) * -0.8),
+      38vh,
+      0
+    ) rotate(170deg);
   }
 
-  75% {
-    transform: translate3d(var(--drift), 80vh, 0)
-      rotate(300deg);
+  60% {
+    transform: translate3d(
+      var(--drift),
+      60vh,
+      0
+    ) rotate(260deg);
+  }
+
+  80% {
+    transform: translate3d(
+      calc(var(--drift) * -0.4),
+      82vh,
+      0
+    ) rotate(330deg);
   }
 
   100% {
     transform: translate3d(0, 110vh, 0) rotate(420deg);
   }
 }
+
 
 @media (prefers-reduced-motion: reduce) {
   #petal-container {
