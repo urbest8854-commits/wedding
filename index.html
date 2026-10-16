@@ -19,24 +19,57 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
+<!-- 배경음악 -->
 <audio id="wedding-music" loop preload="auto">
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<button id="music-toggle" class="music-toggle" type="button">
-  ♫ 음악 켜기
+<!-- 음악 안내 메시지 -->
+<div id="music-notice" class="music-notice">
+  배경음악을 준비하고 있어요.
+</div>
+
+<!-- 음악 버튼 -->
+<button
+  id="music-toggle"
+  class="music-toggle"
+  type="button"
+  aria-label="배경음악 재생"
+>
+  ♫
 </button>
 
 <script>
   const music = document.getElementById("wedding-music");
   const toggle = document.getElementById("music-toggle");
+  const notice = document.getElementById("music-notice");
+
+  let noticeTimer;
+
+  function showNotice(message) {
+    notice.textContent = message;
+    notice.classList.add("show");
+
+    clearTimeout(noticeTimer);
+
+    noticeTimer = setTimeout(() => {
+      notice.classList.remove("show");
+    }, 2500);
+  }
 
   async function playMusic() {
     try {
       await music.play();
-      toggle.textContent = "♫ 음악 끄기";
+
+      toggle.classList.add("playing");
+      toggle.setAttribute("aria-label", "배경음악 끄기");
+
+      showNotice("배경음악이 재생됩니다.");
     } catch (error) {
-      toggle.textContent = "♫ 음악 켜기";
+      toggle.classList.remove("playing");
+      toggle.setAttribute("aria-label", "배경음악 재생");
+
+      showNotice("♫ 버튼을 눌러 배경음악을 재생해 주세요.");
     }
   }
 
@@ -45,11 +78,15 @@
       await playMusic();
     } else {
       music.pause();
-      toggle.textContent = "♫ 음악 켜기";
+
+      toggle.classList.remove("playing");
+      toggle.setAttribute("aria-label", "배경음악 재생");
+
+      showNotice("배경음악이 일시 정지되었습니다.");
     }
   });
 
-  // 페이지에 진입하면 자동 재생을 시도
+  // 페이지 진입 시 자동 재생 시도
   playMusic();
 </script>
   
